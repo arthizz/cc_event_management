@@ -142,16 +142,10 @@ class BackendController extends Controller
 
     public function get_department_list($request){
         $all_dept = Department::all();
-
+        
         if(!empty($request['query']['generalSearch'])){
 
-            foreach($all_dept as $key => $value){
-
-                
-
-            }
-
-            die();
+            $all_dept = Department::orWhere('department', 'like', '%' . $request['query']['generalSearch'] . '%')->get();
 
         }
 

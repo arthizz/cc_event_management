@@ -25,7 +25,7 @@ return [
             'new-tab' => false
         ],
         [
-            'title' => 'Users Performance',
+            'title' => 'Department List',
             'icon' => 'media/svg/icons/Layout/Layout-left-panel-2.svg',
             'bullet' => 'dot',
             'root' => true,

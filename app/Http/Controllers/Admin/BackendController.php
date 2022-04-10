@@ -4,9 +4,30 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Department;
+use Illuminate\Support\Facades\Schema;
 
 class BackendController extends Controller
-{
+{   
+    public function backend_ajax(Request $request, $action){
+
+        switch($action){
+
+            case 'add-department':
+                return $this->add_department($request);
+                break;
+            case 'get-department-list':
+                return $this->get_department_list($request);
+                break;
+            default:
+                return 'action does not exist';
+
+        }
+
+    }
+
     public function index()
     {
         $page_title = 'Dashboard';
@@ -50,12 +71,92 @@ class BackendController extends Controller
 
     }
 
-    public function user_performance(){
+    public function department_list(){
 
-        $page_title = 'Event Management';
-        $page_description = 'Manage Event List';
+        $page_title = 'Department Management';
+        $page_description = 'Manage Department List';
 
-        return view('backend.user-performance-page', compact('page_title', 'page_description'));
+        return view('backend.department-list-page', compact('page_title', 'page_description'));
+
+    }
+    public function add_department($request){
+
+        $validator = Validator::make($request->all(), [
+
+                'department' => 'required',
+            ],
+            [
+                'department.*' => 'this field is required',
+            ]
+        );
+
+        if($validator->fails()){
+
+            return response()->json([
+
+                'success' => false,
+                'message' => $validator->errors()->messages(),
+
+            ], 422);
+
+        }
+
+        try{
+
+            DB::beginTransaction();
+
+            if(Department::where('department', $request->department)->exists()){
+
+                $response['success'] = false;
+                $response['message'] = ['department' => ['Department Already Exist']];
+                
+                return response()->json($response, 422);
+
+            }
+
+            $department = Department::create([
+                'department' => $request->department,
+            ]);
+
+            $department->save();
+
+            DB::commit();
+
+
+        }catch(\Illuminate\Database\QueryException $e){
+
+            DB::rollback();
+            $response['success'] = false;
+            $response['message'] = 'Error in adding Department';
+            $response['error'] = $e->getMessage();
+
+            return response()->json($response, 422);
+
+        }
+
+        $all_dept = Department::all();
+
+        return response()->json($all_dept);
+
+    }
+
+    public function get_department_list($request){
+        $all_dept = Department::all();
+
+        if(!empty($request['query']['generalSearch'])){
+
+            foreach($all_dept as $key => $value){
+
+                
+
+            }
+
+            die();
+
+        }
+
+
+        return response()->json($all_dept);
 
     }
 }

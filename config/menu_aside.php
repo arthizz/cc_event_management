@@ -29,7 +29,7 @@ return [
             'icon' => 'media/svg/icons/Layout/Layout-left-panel-2.svg',
             'bullet' => 'dot',
             'root' => true,
-            'page' => 'administrator/user-performance-page',
+            'page' => 'administrator/department-list-page',
             'new-tab' => false,
         ],
 

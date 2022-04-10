@@ -1,0 +1,17 @@
+.aside {
+
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+#kt_wrapper, #kt_header, #kt_content, #kt_subheader{
+
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+
+}
+.logo-header-mobile{
+
+    max-width: 10%;
+
+}

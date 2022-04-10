@@ -40,5 +40,5 @@ use App\Http\Controllers\Admin\EventController;
 Route::get('/dashboard', [BackendController::class, 'index']);
 Route::get('/user-page', [BackendController::class, 'users_page']);
 Route::get('/event-management-page', [BackendController::class, 'event_management']);
-Route::get('/user-performance-page', [BackendController::class, 'user_performance']);
-Route::post('/backend-ajax/{action}', [EventController::class, 'backend_ajax']);
+Route::get('/department-list-page', [BackendController::class, 'department_list']);
+Route::post('/backend-ajax/{action}', [BackendController::class, 'backend_ajax']);
